@@ -7,7 +7,9 @@ const Layout = () => {
   return (
     <div className={styles.container}>
       <Drawer />
-      <Outlet />
+      <div className={styles.body}>
+        <Outlet />
+      </div>
     </div>
   );
 };

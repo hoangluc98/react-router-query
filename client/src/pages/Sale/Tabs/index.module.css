@@ -1,0 +1,64 @@
+.header {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.header::after {
+  content: '';
+  position: relative;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 1px;
+  border-bottom: 1px solid #ccc;
+}
+
+.header__item {
+  cursor: pointer;
+}
+
+.header__item:hover,
+.header__item--active {
+  font-weight: 600;
+}
+
+.body {
+}
+
+.tabContent {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  padding: 8px;
+}
+
+.contentItem {
+  display: flex;
+  justify-content: space-between;
+  padding: 4px;
+  border-bottom: 1px solid #ccc;
+}
+
+.contentItem:hover {
+  background-color: lightgrey;
+  cursor: pointer;
+}
+
+.detail {
+  padding: 24px;
+}
+
+.detailMoney {
+  padding: 4px;
+  border-bottom: 1px solid #ccc;
+}
+
+.money {
+  font-weight: bold;
+  font-size: 28px;
+}
+
+.textBold {
+  font-weight: bold;
+}

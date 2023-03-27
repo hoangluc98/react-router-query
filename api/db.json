@@ -110,5 +110,64 @@
       "username": "Lucas.Hoang",
       "email": "lucas@gmail.com"
     }
+  ],
+  "sales": [
+    {
+      "id": 1,
+      "key": "overview",
+      "title": "Overview"
+    },
+    {
+      "id": 2,
+      "key": "subcriptions",
+      "title": "Subcriptions"
+    },
+    {
+      "id": 3,
+      "key": "invoices",
+      "title": "Invoices"
+    },
+    {
+      "id": 4,
+      "key": "customers",
+      "title": "Customers"
+    },
+    {
+      "id": 5,
+      "key": "deposits",
+      "title": "Deposits"
+    }
+  ],
+  "sales-data": [
+    {
+      "id": 1,
+      "title": "Stanta Monica",
+      "year": 1995,
+      "money": "$10,800",
+      "saleType": "invoices",
+      "dueToday": "10/31/2000",
+      "proPlan": "$10,800",
+      "custom": "$10,800"
+    },
+    {
+      "id": 2,
+      "title": "Stankonia",
+      "year": 2000,
+      "money": "$8000",
+      "saleType": "invoices",
+      "dueToday": "10/31/2000",
+      "proPlan": "$10,800",
+      "custom": "$10,800"
+    },
+    {
+      "id": 3,
+      "title": "Ocean Avenue",
+      "year": 2003,
+      "money": "$9,500",
+      "saleType": "invoices",
+      "dueToday": "10/31/2000",
+      "proPlan": "$10,800",
+      "custom": "$10,800"
+    }
   ]
 }
