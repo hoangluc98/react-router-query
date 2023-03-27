@@ -1,0 +1,27 @@
+.tabheader {
+  display: grid;
+  grid-template-columns: repeat(3, 100px);
+  gap: 12px;
+}
+.tabheader__item {
+  height: 32px;
+  background-color: #ccc;
+  border-radius: 4px;
+}
+
+.menu {
+}
+.menu__item {
+  height: 48px;
+  margin: 4px;
+  background-color: #ccc;
+  border-bottom: 1px solid #ccc;
+}
+
+.text {
+  height: 12px;
+  width: 100%;
+  background-color: #ccc;
+  border-radius: 4px;
+  margin-bottom: 12px;
+}

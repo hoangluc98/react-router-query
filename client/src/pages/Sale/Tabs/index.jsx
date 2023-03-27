@@ -3,6 +3,7 @@ import styles from './index.module.css';
 import PropTypes from 'prop-types';
 import { Outlet, useNavigate, useParams } from 'react-router-dom';
 import { useEffect } from 'react';
+import { SkeTabHeader } from '../../../components/Skeleton';
 
 const Tabs = ({ tabs = [] }) => {
   const { tab, id } = useParams();
@@ -25,16 +26,20 @@ const Tabs = ({ tabs = [] }) => {
   return (
     <div>
       <div className={styles.header}>
-        {tabs.map((item) => (
-          <div
-            key={item.key}
-            className={`${styles.header__item} ${
-              activedTab === item.key ? styles['header__item--active'] : ''
-            }`}
-            onClick={() => setTabHandler(item.key, null)}>
-            {item.title}
-          </div>
-        ))}
+        {tabs.length ? (
+          tabs.map((item) => (
+            <div
+              key={item.key}
+              className={`${styles.header__item} ${
+                activedTab === item.key ? styles['header__item--active'] : ''
+              }`}
+              onClick={() => setTabHandler(item.key, null)}>
+              {item.title}
+            </div>
+          ))
+        ) : (
+          <SkeTabHeader />
+        )}
       </div>
       <div className={styles.body}>
         <Outlet />

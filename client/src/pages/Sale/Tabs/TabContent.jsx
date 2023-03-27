@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Outlet, useParams, useNavigate } from 'react-router-dom';
 import { getSalesData } from '../../../apis/sales';
 import styles from './index.module.css';
+import { SkeMenu } from '../../../components/Skeleton';
 
 const TabContent = () => {
   const { tab } = useParams();
@@ -15,20 +16,24 @@ const TabContent = () => {
   return (
     <div className={styles.tabContent}>
       <div className={styles.contents}>
-        {sales.map((item) => (
-          <div
-            key={item.id}
-            className={styles.contentItem}
-            onClick={() => navigate(`/sales/${tab}/${item.id}`)}>
-            <div>
-              <div className={styles.textBold}>{item.title}</div>
-              <div>{item.year}</div>
+        {sales.length ? (
+          sales.map((item) => (
+            <div
+              key={item.id}
+              className={styles.contentItem}
+              onClick={() => navigate(`/sales/${tab}/${item.id}`)}>
+              <div>
+                <div className={styles.textBold}>{item.title}</div>
+                <div>{item.year}</div>
+              </div>
+              <div>
+                <div className={styles.textBold}>{item.money}</div>
+              </div>
             </div>
-            <div>
-              <div className={styles.textBold}>{item.money}</div>
-            </div>
-          </div>
-        ))}
+          ))
+        ) : (
+          <SkeMenu />
+        )}
       </div>
       <div>
         <Outlet />
