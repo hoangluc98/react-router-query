@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import { useState, useEffect } from 'react';
 import { Outlet, useParams, useNavigate } from 'react-router-dom';
 import { getSalesData } from '../../../apis/sales';
@@ -36,9 +35,6 @@ const TabContent = () => {
       </div>
     </div>
   );
-};
-TabContent.propTypes = {
-  tab: PropTypes.string.isRequired
 };
 
 export default TabContent;
