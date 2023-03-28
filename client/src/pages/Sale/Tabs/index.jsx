@@ -1,5 +1,4 @@
 import styles from './index.module.css';
-import PropTypes from 'prop-types';
 import { Outlet, useNavigate, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { getSales } from '../../../apis/sales';
@@ -69,10 +68,6 @@ const Tabs = () => {
       </div>
     </div>
   );
-};
-Tabs.propTypes = {
-  loadBody: PropTypes.func,
-  children: PropTypes.element
 };
 
 export default Tabs;

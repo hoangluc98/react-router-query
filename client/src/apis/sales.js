@@ -1,15 +1,19 @@
 import axios from 'axios';
 
 const API_URL = 'http://localhost:3000';
+const delay = (ms) => new Promise((res) => setTimeout(res, ms));
 
-export function getSales() {
+export async function getSales() {
+  await delay(500);
   return axios.get(`${API_URL}/sales`).then((res) => res.data);
 }
 
-export function getSalesData(tab, config = {}) {
+export async function getSalesData(tab, config = {}) {
+  await delay(500);
   return axios.get(`${API_URL}/sales-data?saleType=${tab}`, config).then((res) => res.data);
 }
 
-export function getSalesDetail(id, config = {}) {
+export async function getSalesDetail(id, config = {}) {
+  await delay(500);
   return axios.get(`${API_URL}/sales-data/${id}`, config).then((res) => res.data);
 }
