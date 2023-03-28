@@ -1,16 +1,39 @@
-import { useState } from 'react';
 import styles from './index.module.css';
 import PropTypes from 'prop-types';
 import { Outlet, useNavigate, useParams } from 'react-router-dom';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { getSales } from '../../../apis/sales';
 import { SkeTabHeader } from '../../../components/Skeleton';
 
-const Tabs = ({ tabs = [] }) => {
+const Tabs = () => {
   const { tab, id } = useParams();
   const [activedTab, setActivedTab] = useState('');
+  const [tabs, setTabs] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
-  // if (!tabs.length) return <div>No contents</div>;
+  useEffect(() => {
+    setIsLoading(true);
+    const controller = new AbortController();
+
+    async function doFetch() {
+      try {
+        const res = await getSales({
+          signal: controller.signal
+        });
+        setTabs(res);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+    doFetch();
+
+    return () => {
+      controller.abort();
+    };
+  }, []);
 
   const setTabHandler = (tab, pId = id) => {
     setActivedTab(tab);
@@ -26,7 +49,7 @@ const Tabs = ({ tabs = [] }) => {
   return (
     <div>
       <div className={styles.header}>
-        {tabs.length ? (
+        {!isLoading ? (
           tabs.map((item) => (
             <div
               key={item.key}
@@ -48,7 +71,6 @@ const Tabs = ({ tabs = [] }) => {
   );
 };
 Tabs.propTypes = {
-  tabs: PropTypes.array.isRequired,
   loadBody: PropTypes.func,
   children: PropTypes.element
 };
