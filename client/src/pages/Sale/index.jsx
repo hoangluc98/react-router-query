@@ -2,19 +2,8 @@ import styles from './Tabs/index.module.css';
 import { useQuery } from '@tanstack/react-query';
 import { Outlet, useNavigate, useParams, defer } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { getSales } from '../../apis/sales';
 import { SkeTabHeader } from '../../components/Skeleton';
-
-const contactDetailQuery = () => ({
-  queryKey: ['sale'],
-  queryFn: async () => getSales()
-});
-
-export const loadSales = async (queryClient) => {
-  const query = contactDetailQuery();
-
-  return queryClient.getQueryData(query.queryKey) ?? (await queryClient.fetchQuery(query));
-};
+import { contactDetailQuery, loadSales } from './loader';
 
 export const loader = (queryClient) => async () => {
   return defer({
@@ -22,7 +11,7 @@ export const loader = (queryClient) => async () => {
   });
 };
 
-const Sales = () => {
+export const Sales = () => {
   const { tab, id } = useParams();
   const navigate = useNavigate();
   const [activedTab, setActivedTab] = useState('');
@@ -67,5 +56,3 @@ const Sales = () => {
     </div>
   );
 };
-
-export default Sales;

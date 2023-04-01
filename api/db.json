@@ -141,7 +141,67 @@
   "sales-data": [
     {
       "id": 1,
-      "title": "Stanta Monica",
+      "title": "(Overview) Stanta Monica",
+      "year": 1995,
+      "money": "$10,800",
+      "saleType": "overview",
+      "dueToday": "10/31/2000",
+      "proPlan": "$10,800",
+      "custom": "$10,800"
+    },
+    {
+      "id": 2,
+      "title": "(Overview) Stankonia",
+      "year": 2000,
+      "money": "$8000",
+      "saleType": "overview",
+      "dueToday": "10/31/2000",
+      "proPlan": "$10,800",
+      "custom": "$10,800"
+    },
+    {
+      "id": 3,
+      "title": "(Overview) Ocean Avenue",
+      "year": 2003,
+      "money": "$9,500",
+      "saleType": "overview",
+      "dueToday": "10/31/2000",
+      "proPlan": "$10,800",
+      "custom": "$10,800"
+    },
+    {
+      "id": 4,
+      "title": "(Subcriptions) Stanta Monica",
+      "year": 1995,
+      "money": "$10,800",
+      "saleType": "subcriptions",
+      "dueToday": "10/31/2000",
+      "proPlan": "$10,800",
+      "custom": "$10,800"
+    },
+    {
+      "id": 5,
+      "title": "(Subcriptions) Stankonia",
+      "year": 2000,
+      "money": "$8000",
+      "saleType": "subcriptions",
+      "dueToday": "10/31/2000",
+      "proPlan": "$10,800",
+      "custom": "$10,800"
+    },
+    {
+      "id": 6,
+      "title": "(Subcriptions) Ocean Avenue",
+      "year": 2003,
+      "money": "$9,500",
+      "saleType": "subcriptions",
+      "dueToday": "10/31/2000",
+      "proPlan": "$10,800",
+      "custom": "$10,800"
+    },
+    {
+      "id": 7,
+      "title": "(Invoices) Stanta Monica",
       "year": 1995,
       "money": "$10,800",
       "saleType": "invoices",
@@ -150,8 +210,8 @@
       "custom": "$10,800"
     },
     {
-      "id": 2,
-      "title": "Stankonia",
+      "id": 8,
+      "title": "(Invoices) Stankonia",
       "year": 2000,
       "money": "$8000",
       "saleType": "invoices",
@@ -160,11 +220,71 @@
       "custom": "$10,800"
     },
     {
-      "id": 3,
-      "title": "Ocean Avenue",
+      "id": 9,
+      "title": "(Invoices) Ocean Avenue",
       "year": 2003,
       "money": "$9,500",
       "saleType": "invoices",
+      "dueToday": "10/31/2000",
+      "proPlan": "$10,800",
+      "custom": "$10,800"
+    },
+    {
+      "id": 10,
+      "title": "(Customers) Stanta Monica",
+      "year": 1995,
+      "money": "$10,800",
+      "saleType": "customers",
+      "dueToday": "10/31/2000",
+      "proPlan": "$10,800",
+      "custom": "$10,800"
+    },
+    {
+      "id": 11,
+      "title": "(Customers) Stankonia",
+      "year": 2000,
+      "money": "$8000",
+      "saleType": "customers",
+      "dueToday": "10/31/2000",
+      "proPlan": "$10,800",
+      "custom": "$10,800"
+    },
+    {
+      "id": 12,
+      "title": "(Customers) Ocean Avenue",
+      "year": 2003,
+      "money": "$9,500",
+      "saleType": "customers",
+      "dueToday": "10/31/2000",
+      "proPlan": "$10,800",
+      "custom": "$10,800"
+    },
+    {
+      "id": 13,
+      "title": "(Deposits) Stanta Monica",
+      "year": 1995,
+      "money": "$10,800",
+      "saleType": "deposits",
+      "dueToday": "10/31/2000",
+      "proPlan": "$10,800",
+      "custom": "$10,800"
+    },
+    {
+      "id": 14,
+      "title": "(Deposits) Stankonia",
+      "year": 2000,
+      "money": "$8000",
+      "saleType": "deposits",
+      "dueToday": "10/31/2000",
+      "proPlan": "$10,800",
+      "custom": "$10,800"
+    },
+    {
+      "id": 15,
+      "title": "(Deposits) Ocean Avenue",
+      "year": 2003,
+      "money": "$9,500",
+      "saleType": "deposits",
       "dueToday": "10/31/2000",
       "proPlan": "$10,800",
       "custom": "$10,800"

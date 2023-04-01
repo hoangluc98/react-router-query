@@ -4,9 +4,6 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import BaseLayout from './layout';
 import Dashboard from './pages/Dashboard';
 import Account from './pages/Account';
-import Sale, { loader as saleLoader } from './pages/Sale';
-import TabContent, { loader as contentLoader } from './pages/Sale/Tabs/TabContent';
-import ContentDetail, { loader as dataLoader } from './pages/Sale/Tabs/ContentDetail';
 import { QueryClient } from '@tanstack/react-query';
 const queryClient = new QueryClient();
 
@@ -25,18 +22,24 @@ const router = createBrowserRouter([
       },
       {
         path: 'sales',
-        element: <Sale />,
-        loader: saleLoader(queryClient),
+        async lazy() {
+          let { Sales, loader } = await import('./pages/Sale');
+          return { Component: Sales, loader: loader(queryClient) };
+        },
         children: [
           {
             path: ':tab',
-            element: <TabContent />,
-            loader: contentLoader(queryClient),
+            async lazy() {
+              let { TabContent, loader } = await import('./pages/Sale/Tabs/TabContent');
+              return { Component: TabContent, loader: loader(queryClient) };
+            },
             children: [
               {
                 path: ':id',
-                loader: dataLoader(queryClient),
-                element: <ContentDetail />
+                async lazy() {
+                  let { ContentDetail, loader } = await import('./pages/Sale/Tabs/ContentDetail');
+                  return { Component: ContentDetail, loader: loader(queryClient) };
+                }
               }
             ]
           }
