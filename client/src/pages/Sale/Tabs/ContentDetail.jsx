@@ -1,62 +1,60 @@
 import { getSalesDetail } from '../../../apis/sales';
-import { Suspense } from 'react';
-import { useLoaderData, defer, Await } from 'react-router-dom';
+import { useParams, defer } from 'react-router-dom';
+import { useQuery } from '@tanstack/react-query';
 import styles from './index.module.css';
 import { SkeParagraph } from '../../../components/Skeleton';
 
+const contactDetailQuery = ({ params }) => ({
+  queryKey: ['sale', 'detail', params.id],
+  queryFn: async () => getSalesDetail(params.id)
+});
+
+export const loadSales = async (queryClient, ctx) => {
+  const query = contactDetailQuery(ctx);
+
+  return queryClient.getQueryData(query.queryKey) ?? (await queryClient.fetchQuery(query));
+};
+
+export const loader = (queryClient) => async (ctx) => {
+  return defer({
+    data: loadSales(queryClient, ctx)
+  });
+};
+
 const ContentDetail = () => {
-  const { data } = useLoaderData();
+  const params = useParams();
+  const { data } = useQuery(contactDetailQuery({ params }));
 
   return (
     <div>
-      <Suspense
-        fallback={
-          <div className={styles.detail}>
-            <SkeParagraph />
-          </div>
-        }>
-        <Await resolve={data}>
-          {(loadedData) => (
-            <div className={styles.detail}>
-              <div className={styles.textBold}>{loadedData.title}</div>
-              <div className={styles.money}>{loadedData.money}</div>
-              <div style={{ marginBottom: '28px' }}>DUE TODAY + INVOICED {loadedData.dueToday}</div>
+      {data ? (
+        <div className={styles.detail}>
+          <div className={styles.textBold}>{data.title}</div>
+          <div className={styles.money}>{data.money}</div>
+          <div style={{ marginBottom: '28px' }}>DUE TODAY + INVOICED {data.dueToday}</div>
 
-              <div>
-                <div className={styles.detailMoney}>
-                  <span>Pro Plan</span>
-                  <span>{loadedData.proPlan}</span>
-                </div>
-                <div className={styles.detailMoney}>
-                  <span>Custom</span>
-                  <span>{loadedData.custom}</span>
-                </div>
-                <div className={styles.detailMoney}>
-                  <span className={styles.textBold}>Net total</span>
-                  <span className={styles.textBold}>{loadedData.money}</span>
-                </div>
-              </div>
+          <div>
+            <div className={styles.detailMoney}>
+              <span>Pro Plan</span>
+              <span>{data.proPlan}</span>
             </div>
-          )}
-        </Await>
-      </Suspense>
+            <div className={styles.detailMoney}>
+              <span>Custom</span>
+              <span>{data.custom}</span>
+            </div>
+            <div className={styles.detailMoney}>
+              <span className={styles.textBold}>Net total</span>
+              <span className={styles.textBold}>{data.money}</span>
+            </div>
+          </div>
+        </div>
+      ) : (
+        <div className={styles.detail}>
+          <SkeParagraph />
+        </div>
+      )}
     </div>
   );
 };
 
 export default ContentDetail;
-
-async function loadSales(id) {
-  try {
-    const res = await getSalesDetail(id);
-    return res;
-  } catch (error) {
-    console.error(error);
-  }
-}
-
-export async function loader({ params }) {
-  return defer({
-    data: loadSales(params.id)
-  });
-}

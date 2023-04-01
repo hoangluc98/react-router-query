@@ -1,37 +1,52 @@
-import { Suspense } from 'react';
-import { Outlet, useParams, useNavigate, useLoaderData, defer, Await } from 'react-router-dom';
+import { useQuery } from '@tanstack/react-query';
+import { Outlet, useParams, useNavigate, defer } from 'react-router-dom';
 import { getSalesData } from '../../../apis/sales';
 import styles from './index.module.css';
 import { SkeMenu } from '../../../components/Skeleton';
 
+const contactDetailQuery = ({ params }) => ({
+  queryKey: ['sale', params.tab],
+  queryFn: async () => getSalesData(params.tab)
+});
+
+export const loadSales = async (queryClient, ctx) => {
+  const query = contactDetailQuery(ctx);
+
+  return queryClient.getQueryData(query.queryKey) ?? (await queryClient.fetchQuery(query));
+};
+
+export const loader = (queryClient) => async (ctx) => {
+  return defer({
+    data: loadSales(queryClient, ctx)
+  });
+};
+
 const TabContent = () => {
-  const { tab } = useParams();
-  const { sales } = useLoaderData();
+  const params = useParams();
+  const { data: sales } = useQuery(contactDetailQuery({ params }));
   const navigate = useNavigate();
 
   return (
     <div className={styles.tabContent}>
       <div className={styles.contents}>
-        <Suspense fallback={<SkeMenu />}>
-          <Await resolve={sales}>
-            {(loadedSales) =>
-              loadedSales.map((item) => (
-                <div
-                  key={item.id}
-                  className={styles.contentItem}
-                  onClick={() => navigate(`/sales/${tab}/${item.id}`)}>
-                  <div>
-                    <div className={styles.textBold}>{item.title}</div>
-                    <div>{item.year}</div>
-                  </div>
-                  <div>
-                    <div className={styles.textBold}>{item.money}</div>
-                  </div>
-                </div>
-              ))
-            }
-          </Await>
-        </Suspense>
+        {sales ? (
+          sales.map((item) => (
+            <div
+              key={item.id}
+              className={styles.contentItem}
+              onClick={() => navigate(`/sales/${params.tab}/${item.id}`)}>
+              <div>
+                <div className={styles.textBold}>{item.title}</div>
+                <div>{item.year}</div>
+              </div>
+              <div>
+                <div className={styles.textBold}>{item.money}</div>
+              </div>
+            </div>
+          ))
+        ) : (
+          <SkeMenu />
+        )}
       </div>
       <div>
         <Outlet />
@@ -41,18 +56,3 @@ const TabContent = () => {
 };
 
 export default TabContent;
-
-async function loadSales(tab) {
-  try {
-    const res = await getSalesData(tab);
-    return res;
-  } catch (error) {
-    console.error(error);
-  }
-}
-
-export async function loader({ params }) {
-  return defer({
-    sales: loadSales(params.tab)
-  });
-}

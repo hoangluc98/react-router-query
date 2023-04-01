@@ -7,6 +7,8 @@ import Account from './pages/Account';
 import Sale, { loader as saleLoader } from './pages/Sale';
 import TabContent, { loader as contentLoader } from './pages/Sale/Tabs/TabContent';
 import ContentDetail, { loader as dataLoader } from './pages/Sale/Tabs/ContentDetail';
+import { QueryClient } from '@tanstack/react-query';
+const queryClient = new QueryClient();
 
 const router = createBrowserRouter([
   {
@@ -24,16 +26,16 @@ const router = createBrowserRouter([
       {
         path: 'sales',
         element: <Sale />,
-        loader: saleLoader,
+        loader: saleLoader(queryClient),
         children: [
           {
             path: ':tab',
             element: <TabContent />,
-            loader: contentLoader,
+            loader: contentLoader(queryClient),
             children: [
               {
                 path: ':id',
-                loader: dataLoader,
+                loader: dataLoader(queryClient),
                 element: <ContentDetail />
               }
             ]

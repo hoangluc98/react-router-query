@@ -1,14 +1,32 @@
 import styles from './Tabs/index.module.css';
-import { Outlet, useLoaderData, useNavigate, useParams, defer, Await } from 'react-router-dom';
-import { useEffect, useState, Suspense } from 'react';
+import { useQuery } from '@tanstack/react-query';
+import { Outlet, useNavigate, useParams, defer } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 import { getSales } from '../../apis/sales';
 import { SkeTabHeader } from '../../components/Skeleton';
+
+const contactDetailQuery = () => ({
+  queryKey: ['sale'],
+  queryFn: async () => getSales()
+});
+
+export const loadSales = async (queryClient) => {
+  const query = contactDetailQuery();
+
+  return queryClient.getQueryData(query.queryKey) ?? (await queryClient.fetchQuery(query));
+};
+
+export const loader = (queryClient) => async () => {
+  return defer({
+    data: loadSales(queryClient)
+  });
+};
 
 const Sales = () => {
   const { tab, id } = useParams();
   const navigate = useNavigate();
-  const { tabs } = useLoaderData();
   const [activedTab, setActivedTab] = useState('');
+  const { data: tabs } = useQuery(contactDetailQuery());
 
   const setTabHandler = (tab, pId = id) => {
     setActivedTab(tab);
@@ -27,22 +45,20 @@ const Sales = () => {
 
       <div>
         <div className={styles.header}>
-          <Suspense fallback={<SkeTabHeader />}>
-            <Await resolve={tabs}>
-              {(loadedTabs) =>
-                loadedTabs.map((item) => (
-                  <div
-                    key={item.key}
-                    className={`${styles.header__item} ${
-                      activedTab === item.key ? styles['header__item--active'] : ''
-                    }`}
-                    onClick={() => setTabHandler(item.key, null)}>
-                    {item.title}
-                  </div>
-                ))
-              }
-            </Await>
-          </Suspense>
+          {tabs ? (
+            tabs.map((item) => (
+              <div
+                key={item.key}
+                className={`${styles.header__item} ${
+                  activedTab === item.key ? styles['header__item--active'] : ''
+                }`}
+                onClick={() => setTabHandler(item.key, null)}>
+                {item.title}
+              </div>
+            ))
+          ) : (
+            <SkeTabHeader />
+          )}
         </div>
         <div className={styles.body}>
           <Outlet />
@@ -53,18 +69,3 @@ const Sales = () => {
 };
 
 export default Sales;
-
-async function loadSales() {
-  try {
-    const res = await getSales();
-    return res;
-  } catch (error) {
-    console.error(error);
-  }
-}
-
-export async function loader() {
-  return defer({
-    tabs: loadSales()
-  });
-}
